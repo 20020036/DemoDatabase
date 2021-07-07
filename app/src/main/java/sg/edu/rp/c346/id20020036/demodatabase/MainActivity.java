@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Task> al;
     ListView lv;
     EditText etTask, etDate;
+    Boolean asc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         etDate = findViewById(R.id.etDate);
         lv = findViewById(R.id.lv);
         al = new ArrayList<>();
+        asc = true;
         AA = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, al);
         lv.setAdapter(AA);
         btnInsert.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DBHelper db = new DBHelper(MainActivity.this);
                 ArrayList<String> data = db.getTaskContent();
+
                 db.close();
 
                 String txt = "";
@@ -61,8 +64,16 @@ public class MainActivity extends AppCompatActivity {
                     txt += i + ". " + data.get(i) + "\n";
                 }
                 tvResults.setText(txt);
+                if(asc == true)
+                {
+                    asc = false;
+                }
+                else
+                {
+                    asc = true;
+                }
                 al.clear();
-                al.addAll(db.getTasks(true));
+                al.addAll(db.getTasks(asc));
                 AA.notifyDataSetChanged();
             }
         });
