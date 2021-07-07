@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 tvResults.setText(txt);
                 al.clear();
-                al.addAll(db.getTasks());
+                al.addAll(db.getTasks(true));
                 AA.notifyDataSetChanged();
             }
         });
